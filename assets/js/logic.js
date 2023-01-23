@@ -20,11 +20,54 @@ var userInitials = '';
 
 function getQuestion() {
     questionsTileEl.textContent = questions[currentQuestion].question;
+    // Render a new button for each answer
+    for (var i = 0; i < questions[currentQuestion].answers.length; i++) {
+        var button = document.createElement("button");
+        
+        button.textContent = i+1+". "+questions[currentQuestion].answers[i];
+        button.setAttribute("id", "answer");
+        button.setAttribute("answer", i); 
+        button.addEventListener("click", choiceMade);          
+        choicesEl.appendChild(button);
+    }
+}
+
+function choiceMade(event) {
+    event.preventDefault();
+    var choices = event.target;
+    var correctSound = new Audio("./assets/sfx/correct.wav");
+    var wrongSound = new Audio("./assets/sfx/incorrect.wav");
+
+    currentQuestion++;
+    hr.setAttribute("class", "line show");
+    questionsEl.appendChild(hr);
+    div.setAttribute("class", "line show");
+    questionsEl.appendChild(div);
+
+    if (choices.getAttribute("answer") == questions[currentQuestion-1].rightAnswer) {
+        runningScore++;
+        correctSound.play();
+        div.textContent = "Correct";
+    } 
+    else {
+        wrongSound.play();
+        div.textContent = "Wrong";
+        timerCount = timerCount - 10;
+    }
+    if(currentQuestion < questions.length) {
+       //wait just enough for the user to see the correct/wrong message
+        setTimeout(() => {
+            choicesEl.innerHTML = '';
+            hr.setAttribute("class", "line hide");
+            div.setAttribute("class", "line hide");
+            getQuestion();   
+        }, 500);
+    }
 }
 
 // The startQuiz function is called when the start button is clicked
 function startQuiz() {
-    timerCount = 2;
+    timerCount = 10;
     getQuestion();
     questionsEl.setAttribute("class", "show");
     startScreenEl.setAttribute("class", "hide"); 
