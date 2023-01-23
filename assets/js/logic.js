@@ -30,6 +30,7 @@ function getQuestion() {
         button.addEventListener("click", choiceMade);          
         choicesEl.appendChild(button);
     }
+    return;
 }
 
 function choiceMade(event) {
@@ -53,6 +54,9 @@ function choiceMade(event) {
         wrongSound.play();
         div.textContent = "Wrong";
         timerCount = timerCount - 10;
+        if (timerCount < 0) {
+            timerCount = 0;
+        }
     }
     if(currentQuestion < questions.length) {
        //wait just enough for the user to see the correct/wrong message
@@ -63,22 +67,36 @@ function choiceMade(event) {
             getQuestion();   
         }, 500);
     }
+    return;
 }
 
 // The startQuiz function is called when the start button is clicked
 function startQuiz() {
-    timerCount = 10;
+    timerCount = 100;
     getQuestion();
     questionsEl.setAttribute("class", "show");
     startScreenEl.setAttribute("class", "hide"); 
     getScores();
     startTimer();
+    return;
 }
 
 // endQuiz function is called when the submit button is clicked
 function endQuiz(event) {
     event.preventDefault();
+    var iAndS = {
+        initials: userInitials,
+        score: finalScoreEl.innerHTML
+    };
 
+    if (userInitials != '') {
+        initialsAndScores.push(iAndS);
+        console.log(initialsAndScores);
+        localStorage.setItem("initialsAndScores", JSON.stringify(initialsAndScores));
+    }
+    else {
+        return;
+    }
     currentQuestion = 0;
     runningScore = 0;
     choicesEl.innerHTML = '';
@@ -93,10 +111,16 @@ function endQuiz(event) {
 function startTimer() {
     // Sets timer
     timer = setInterval(function() {
-      timerCount--;
+        if(timerCount >0 ) {
+            timerCount--;
+        }
+        else {
+            timerCount = 0;
+        }
+
       timerEl.textContent = "Time: "+timerCount;
       // Tests if time has run out
-      if (timerCount === 0 || currentQuestion === questions.length) {
+      if (timerCount <= 0 || currentQuestion === questions.length) {
         // Clears interval
         clearInterval(timer);
         finalScoreEl.textContent = runningScore;
@@ -123,5 +147,14 @@ endButtonEl.addEventListener("click", endQuiz);
 
 //the user input for initials is validated, though they are allowed alphanumeric and special chars - aka Elon Musk's child!!!
 initialsEl.addEventListener("keydown", function(event) {
-
+    if (userInitials.length < initialsEl.getAttribute("max") && event.keyCode != 8) {
+        userInitials += event.key;
+    }
+    else if (event.keyCode === 8 && userInitials.length != 0){
+        userInitials = userInitials.slice(0, userInitials.length-1);
+        console.log("inits: "+userInitials);
+    }  
+    else {
+        event.preventDefault();
+    }
 });
