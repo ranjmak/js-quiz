@@ -73,6 +73,7 @@ var questions = [
         ],
         rightAnswer: "2"
     },
+    /*
     {
         question: "How to write an IF statement in JavaScript?",
         answers: [
@@ -83,7 +84,6 @@ var questions = [
         ],
         rightAnswer: "1"
     },
-    /*
     {
         question: "How to write an IF statement for executing some code if 'i' is NOT equal to 5?",
         answers: [
@@ -113,6 +113,7 @@ var questions = [
         ],
         rightAnswer: "3"
     },
+    */
     {
         question: "What is the correct way to write a JavaScript array?",
         answers: [
@@ -123,6 +124,7 @@ var questions = [
         ],
         rightAnswer: "2"
     },
+    /*
     {
         question: "What is the correct JavaScript syntax for opening a new window called 'w2' ?",
         answers: [

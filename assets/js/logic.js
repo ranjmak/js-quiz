@@ -146,10 +146,20 @@ startButtonEl.addEventListener("click", startQuiz);
 // Attach event listener to submit button to call endQuiz function on click
 endButtonEl.addEventListener("click", endQuiz);
 
-//the user input for initials is validated, though they are allowed alphanumeric and special chars - aka Elon Musk's child!!!
+//the user input for initials is validated, they are only allowed lowercase & uppercase alphabet characters
 initialsEl.addEventListener("keydown", function(event) {
+    var alphaChars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+
     if (userInitials.length < initialsEl.getAttribute("max") && event.keyCode != 8) {
-        userInitials += event.key;
+        if(alphaChars.includes(event.key)) {
+            userInitials += event.key;
+        }
+        else {
+            event.preventDefault();
+        }
+    }
+    else if(event.keyCode === 13) {
+        event.preventDefault();
     }
     else if (event.keyCode === 8 && userInitials.length != 0){
         userInitials = userInitials.slice(0, userInitials.length-1);
