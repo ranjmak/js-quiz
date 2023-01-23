@@ -9,6 +9,7 @@ var finalScoreEl = document.querySelector("#final-score");
 var initialsEl = document.querySelector("#initials");
 var endButtonEl = document.querySelector("#submit");
 
+var maxTimerCountReqd = 75;
 var timerCount;
 var runningScore = 0;
 var currentQuestion = 0;
@@ -72,7 +73,7 @@ function choiceMade(event) {
 
 // The startQuiz function is called when the start button is clicked
 function startQuiz() {
-    timerCount = 100;
+    timerCount = maxTimerCountReqd;
     getQuestion();
     questionsEl.setAttribute("class", "show");
     startScreenEl.setAttribute("class", "hide"); 
