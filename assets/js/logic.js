@@ -128,6 +128,7 @@ function startTimer() {
         questionsEl.setAttribute("class", "hide");
         endScreenEl.setAttribute("class", "show");
       }
+      return;
     }, 1000);
 }
 
@@ -152,9 +153,9 @@ initialsEl.addEventListener("keydown", function(event) {
     }
     else if (event.keyCode === 8 && userInitials.length != 0){
         userInitials = userInitials.slice(0, userInitials.length-1);
-        console.log("inits: "+userInitials);
     }  
     else {
         event.preventDefault();
     }
+    return;
 });
