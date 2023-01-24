@@ -53,16 +53,14 @@ Create a code quiz that contains the following requirements:
   *  at the end of the quizz, the user is given the option to set initials (to store in local storage) or start over
   *  the view highscores page shows a list of all persistant high scores, with the option to clear them or start over
 
-## Grading Requirements
 
+## Grading Requirements
 This challenge is graded based on the following criteria: 
 
 ### Technical Acceptance Criteria: 40%
-
 * Satisfies all of the above acceptance criteria.
 
 ### Deployment: 32%
-
 * Application deployed at live URL.
 
 * Application loads with no errors.
