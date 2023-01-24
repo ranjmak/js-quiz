@@ -6,9 +6,7 @@ quizz that tests the users knowledge of Javascript with a timed quizz. the score
 
 ## the Task
 
-As you proceed in your journey to becoming a front-end web developer, it’s likely that you’ll be asked to complete a coding assessment, perhaps as part of an interview process. A typical coding assessment is a combination of multiple-choice questions and interactive coding challenges. 
-
-To help you become familiar with these tests and give you a chance to apply the skills from this module, this week’s challenge invites you to build a timed coding quiz with multiple-choice questions. This app will run in the browser, and will feature dynamically updated HTML and CSS powered by JavaScript code that you write. It will have a clean, polished, and responsive user interface. This week’s coursework has taught you all the skills you need to succeed in this challenge.
+Build a timed coding quiz with multiple-choice questions. This app will run in the browser, and will feature dynamically updated HTML and CSS powered by JavaScript code that you write. It will have a clean, polished, and responsive user interface. This week’s coursework has taught you all the skills you need to succeed in this challenge.
 
 
 ## User Story
@@ -29,17 +27,31 @@ Create a code quiz that contains the following requirements:
   * 
   * When answer is clicked, the next question appears
   * 
-  * If the answer clicked was incorrect then subtract time from the clock
+  * If the answer clicked was incorrect then subtract time (10 secs) from the clock
 
 * The quiz should end when all questions are answered or the timer reaches 0.
 
   * When the game ends, it should display their score and give the user the ability to save their initials and their score
   
-## Mock-Up
+## website: https://ranjmak.github.io/js-quizz/
 
-The following animation demonstrates the application functionality:
+## Github repo: https://github.com/ranjmak/js-quizz
 
-![Animation of code quiz. Presses button to start quiz. Clicks the button for the answer to each question, displays if answer was correct or incorrect. Quiz finishes and displays high scores. User adds their intials, then clears their intials and starts over.](./assets/08-web-apis-challenge-demo.gif)
+## screenshots
+![Code quiz. Presses button to start quiz: ](./assets/images/codingQuizz1.png)
+![Click the button for the answer to each question: ](./assets/images/codingQuizz2.png)
+![User adds their intials: ](./assets/images/codingQuizz3.png)
+![Quiz finishes and displays high scores: ](./assets/images/codingQuizz4.png)
+
+## Notes
+  *  the quizz timer count is set to 75 secs and the questions stop when either the timer gets down to 0 or all questions are answered.
+  *  questions are from the question.js file - currently there are 20 questions in the file, but 10 are commented out... the questions are in an array and each question is a data structure with the following:
+      *  the question
+      *  an array of answers
+      *  the correct answer
+  *  a short delay is introduced so the user can view whether they got the question right/wrong before either the next question or the scores element is shown
+  *  at the end of the quizz, the user is given the option to set initials (to store in local storage) or start over
+  *  the view highscores page shows a list of all persistant high scores, with the option to clear them or start over
 
 ## Grading Requirements
 
