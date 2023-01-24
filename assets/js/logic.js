@@ -9,16 +9,16 @@ var finalScoreEl = document.querySelector("#final-score");
 var initialsEl = document.querySelector("#initials");
 var endButtonEl = document.querySelector("#submit");
 
-var maxTimerCountReqd = 75;
-var timerCount;
-var runningScore = 0;
-var currentQuestion = 0;
-var initialsAndScores = [];
-var hr = document.createElement('hr');
-var div = document.createElement('div');
+var maxTimerCountReqd = 75; //num of secs required
+var timerCount; // count down time counter
+var runningScore = 0; // the running score of the number of right questions
+var currentQuestion = 0; // where we are in the question list
+var initialsAndScores = []; // data that will be pushed to the local storage
+var hr = document.createElement('hr'); // a light horizontal rule
+var div = document.createElement('div'); // div section for saying correct/wrong
 var userInitials = '';
 
-
+// function to render a question from the questions array (questions found in questions.js) and dynamic buttons for answers
 function getQuestion() {
     questionsTileEl.textContent = questions[currentQuestion].question;
     // Render a new button for each answer
@@ -28,12 +28,15 @@ function getQuestion() {
         button.textContent = i+1+". "+questions[currentQuestion].answers[i];
         button.setAttribute("id", "answer");
         button.setAttribute("answer", i); 
+        // call choiceMade function when the user clicks on an answer
         button.addEventListener("click", choiceMade);          
         choicesEl.appendChild(button);
     }
     return;
 }
 
+// function to ascertain whether the answer was correct/wrong and alert the user to that fact visually and via audio
+// also update the runningScore if correct
 function choiceMade(event) {
     event.preventDefault();
     var choices = event.target;
@@ -55,6 +58,7 @@ function choiceMade(event) {
         wrongSound.play();
         div.textContent = "Wrong";
         timerCount = timerCount - 10;
+        // we don't want to see -ve numer for time, so ensure we show 0 when a wrong answer forces timer below 0
         if (timerCount < 0) {
             timerCount = 0;
         }
@@ -72,11 +76,14 @@ function choiceMade(event) {
 }
 
 // The startQuiz function is called when the start button is clicked
+// it initialises and starts the timer, hides the startScreen element and shows the questions element
 function startQuiz() {
     timerCount = maxTimerCountReqd;
     getQuestion();
     questionsEl.setAttribute("class", "show");
     startScreenEl.setAttribute("class", "hide"); 
+    // gets the scores if any from local storage into the initialsAndScores array
+    // so that we can push any new initials & scores combo to the array before adding to local storage
     getScores();
     startTimer();
     return;
@@ -89,15 +96,15 @@ function endQuiz(event) {
         initials: userInitials,
         score: finalScoreEl.innerHTML
     };
-
+    // if initials is not empty, push it to the initialsAndScores array before adding it to local storage
     if (userInitials != '') {
         initialsAndScores.push(iAndS);
-        console.log(initialsAndScores);
         localStorage.setItem("initialsAndScores", JSON.stringify(initialsAndScores));
     }
     else {
         return;
     }
+    // clear the current vars, hide correct/wrong and endScreen element classes and show the startScreen element
     currentQuestion = 0;
     runningScore = 0;
     choicesEl.innerHTML = '';
@@ -116,6 +123,7 @@ function startTimer() {
             timerCount--;
         }
         else {
+            // we don't like -ve time! which can happen when 10 is substracted for a wrong answer
             timerCount = 0;
         }
 
@@ -133,6 +141,7 @@ function startTimer() {
     }, 1000);
 }
 
+// function to get data into initialsAndScores array from local storage
 function getScores() {
     var storedScores = localStorage.getItem("initialsAndScores");
 
@@ -151,15 +160,19 @@ endButtonEl.addEventListener("click", endQuiz);
 initialsEl.addEventListener("keydown", function(event) {
     var alphaChars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
+    // the following only allows the max (as dictated by index.html) number of initials of uppercase & lowercase chars
+    // but backspace (keyCode 8) is allowed in certain cases!
     if (userInitials.length < initialsEl.getAttribute("max") && event.keyCode != 8) {
         if(alphaChars.includes(event.key)) {
             userInitials += event.key;
         }
         else {
+            // ignore other keypresses
             event.preventDefault();
         }
     }
     else if(event.keyCode === 13) {
+        // ignore the enter/return key
         event.preventDefault();
     }
     else if (event.keyCode === 8 && userInitials.length != 0){
