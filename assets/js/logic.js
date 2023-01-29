@@ -112,7 +112,7 @@ function endQuiz(event) {
     div.setAttribute("class", "line hide");
     endScreenEl.setAttribute("class", "hide");
     startScreenEl.setAttribute("class", "start");
-    return;
+    window.location.href = "highscores.html";
 }
 
 // The setTimer function starts and stops the timer and triggers the end screen
